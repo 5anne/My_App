@@ -1,4 +1,5 @@
 "use client"
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 // import { useRouter } from 'next/router';
@@ -6,6 +7,8 @@ import React from 'react';
 
 const Navbar = () => {
     const pathName = usePathname();
+    const session = useSession();
+    console.log(session);
     // const router = useRouter();
 
     const links = [
@@ -60,7 +63,9 @@ const Navbar = () => {
                 {links.map((link) => <Link className={`${pathName === link.path && 'text-blue-700'}`} key={link.path} href={link.path}>{link.title}</Link>)}
             </div>
             <div>
-                <button onClick={handler} className='bg-slate-600 p-2'>Login</button>
+                {
+                    session.status === "authenticated" ? <button onClick={handler} className='bg-slate-600 p-2'>Login</button> : <button onClick={handler} className='bg-slate-600 p-2'>Log Out</button>
+                }
             </div>
         </div>
     );

@@ -1,5 +1,7 @@
 import AboutContent from '@/components/AboutContent';
+import { getServerSession } from 'next-auth';
 import React from 'react';
+import { authOptions } from '../api/auth/[...nextauth]/route';
 
 const getTime = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}time`, { cache: 'no-store', next: { revalidate: 5 } });
@@ -9,6 +11,7 @@ const getTime = async () => {
 }
 
 const page = async () => {
+    const session = await getServerSession(authOptions);
     const currentTime = await getTime();
     return (
         <div className='text-center p-8'>
