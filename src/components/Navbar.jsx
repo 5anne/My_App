@@ -1,5 +1,6 @@
 "use client"
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 // import { useRouter } from 'next/router';
@@ -64,8 +65,15 @@ const Navbar = () => {
             </div>
             <div>
                 {
-                    session.status === "authenticated" ? <button onClick={handler} className='bg-slate-600 p-2'>Login</button> : <button onClick={handler} className='bg-slate-600 p-2'>Log Out</button>
+                    session.status === "authenticated" ? <Link href="/api/auth/signin"><button onClick={handler} className='bg-slate-600 p-2'>Login</button></Link> : <Link href="/api/auth/signin"><button onClick={handler} className='bg-slate-600 p-2'>Log Out</button></Link>
                 }
+            </div>
+            <div className='flex justify-between items-center gap-4'>
+                <Image className='rounded-full' width={30} height={30} alt={session?.data?.user?.name} src={session?.data?.user?.image} />
+                <div>
+                    <h6>{session?.data?.user?.name}</h6>
+                    <h6>{session?.data?.user?.type}</h6>
+                </div>
             </div>
         </div>
     );

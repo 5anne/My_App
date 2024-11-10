@@ -13,6 +13,7 @@ const getTime = async () => {
 const page = async () => {
     const session = await getServerSession(authOptions);
     const currentTime = await getTime();
+    console.log({ session });
     return (
         <div className='text-center p-8'>
             <h6>Time: {currentTime}</h6>
