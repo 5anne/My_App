@@ -1,5 +1,5 @@
 "use client"
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -64,8 +64,9 @@ const Navbar = () => {
                 {links.map((link) => <Link className={`${pathName === link.path && 'text-blue-700'}`} key={link.path} href={link.path}>{link.title}</Link>)}
             </div>
             <div>
+                <Link href="/api/auth/signup"><button className='bg-slate-600 p-2 mr-2'>Sign Up</button></Link>
                 {
-                    session.status === "authenticated" ? <Link href="/api/auth/signin"><button onClick={handler} className='bg-slate-600 p-2'>Login</button></Link> : <Link href="/api/auth/signin"><button onClick={handler} className='bg-slate-600 p-2'>Log Out</button></Link>
+                    session.status === "authenticated" ? <button onClick={() => signOut()} className='bg-slate-600 p-2'>Log Out</button> : <Link href="/api/auth/signin"><button onClick={handler} className='bg-slate-600 p-2'>Login</button></Link>
                 }
             </div>
             <div className='flex justify-between items-center gap-4'>
